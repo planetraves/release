@@ -1,0 +1,45 @@
+/* ============================================================
+   header.css — Header brand (title + logo icon)
+   Tweak font-size / font-family / logo size here.
+   ============================================================ */
+
+.md-header__brand {
+    margin-right: auto;   /* push remaining header items to the right */
+    padding-left: 0.4rem;
+    display: flex;
+    flex-direction: row;  /* logo on the left, title on its right */
+    align-items: center;
+    gap: 0rem;
+    text-decoration: none;
+    color: var(--primary-text);
+}
+
+/* Logo icon (sits to the left of the title) */
+.md-header__brand-logo {
+    height: 40px;
+    width: auto;
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+/* Title text */
+.site-title {
+    font-family: "Monoton", cursive;
+    font-size: 1.4rem;
+    font-weight: 400; /* Monoton only ships weight 400 */
+    text-transform: uppercase;
+    color: var(--primary-text);
+    white-space: nowrap;
+}
+
+.site-title.left {
+    padding-right: 0;
+    margin-right: 0;
+}
+
+.site-title.right {
+    padding-left: 0;
+    margin-left: 0;
+}

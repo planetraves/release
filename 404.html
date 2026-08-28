@@ -49,9 +49,17 @@
     
       <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700;800;900&display=swap">
     
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap">
+    
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Audiowide&display=swap">
+    
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Monoton&display=swap">
+    
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.conditional.slate.min.css">
     
       <link rel="stylesheet" href="/assets/css/theme.css">
+    
+      <link rel="stylesheet" href="/assets/css/header.css">
     
       <link rel="stylesheet" href="/assets/css/nav.css">
     
@@ -115,43 +123,33 @@
         class="md-header__inner md-grid"
         aria-label="Header"
     >
-
-        <!-- Link to home -->
-        <a
-            href="/."
-            title="Planet Raves"
-            class="md-header__button md-logo"
-            aria-label="Planet Raves"
-            data-md-component="logo"
-        >
-            
-  <img src="/assets/images/logo2.png" alt="logo">
-
-        </a>
-
         <!-- Button to open drawer -->
         <label class="md-header__button md-icon" for="__drawer">
             
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
         </label>
 
-        <!-- Header title -->
-        <div class="md-header__title" data-md-component="header-title">
-            <div class="md-header__ellipsis">
-                <div class="md-header__topic">
-                    <span class="md-ellipsis site-title">
-                        Planet Raves
-                    </span>
-                </div>
-                <div class="md-header__topic" data-md-component="header-topic">
-                    <span class="md-ellipsis">
-                        
-                            
-                        
-                    </span>
-                </div>
-            </div>
-        </div>
+        <!-- Centered brand: logo2 + site title -->
+        <a
+            href="/."
+            title="Planet Raves"
+            class="md-header__brand"
+            aria-label="Planet Raves"
+            data-md-component="logo"
+        >
+            <span class="md-header__brand-title site-title left">
+                Planet
+            </span>
+
+            <img
+                class="md-header__brand-logo"
+                src="/assets/images/logo3.png"
+                alt="Planet Raves"
+            >
+            <span class="md-header__brand-title site-title right">
+                Raves
+            </span>
+        </a>
 
         <!-- Color palette toggle -->
         
@@ -539,13 +537,13 @@
       
         <script src="https://unpkg.com/libphonenumber-js@1.13.3/bundle/libphonenumber-min.js"></script>
       
-        <script src="/assets/js/global/config.js?v=d44646ef.73048de"></script>
+        <script src="/assets/js/global/config.js?v=ad6d463d.73048de"></script>
       
-        <script src="/assets/js/global/helper.js?v=d44646ef.73048de"></script>
+        <script src="/assets/js/global/helper.js?v=ad6d463d.73048de"></script>
       
-        <script src="/assets/js/global/user_profile.js?v=d44646ef.73048de"></script>
+        <script src="/assets/js/global/user_profile.js?v=ad6d463d.73048de"></script>
       
-        <script src="/assets/js/global/supabase.js?v=d44646ef.73048de"></script>
+        <script src="/assets/js/global/supabase.js?v=ad6d463d.73048de"></script>
       
     
   </body>
