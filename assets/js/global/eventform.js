@@ -1,7 +1,7 @@
 console.log("executing:", "eventform.js");
 
-import { openErrorModal } from "./modal.js?v=caf7657b.73048de";
-import { tagInput, userTags, clearTags, addTag } from "./tags.js?v=caf7657b.73048de";
+import { openErrorModal } from "./modal.js?v=180a668b.e3628cd";
+import { tagInput, userTags, clearTags, addTag } from "./tags.js?v=180a668b.e3628cd";
 // import { parsePhoneNumber, AsYouType } from 'libphonenumber-js'
 
 /* === VARIABLES === */
