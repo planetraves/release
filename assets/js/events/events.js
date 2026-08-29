@@ -1,10 +1,10 @@
 console.log("executing:", "events.js");
 
-import { openErrorModal, openEventModal, openSuccessModal } from "../global/modal.js?v=99e7f3d8.91291a0";
+import { openErrorModal, openEventModal, openSuccessModal } from "../global/modal.js?v=1c1c8f16.b47c27c";
 
 import { renderOptionBtn, renderSection, renderEventTile,
          renderDots, renderEventSuggestion
-} from "./renderevents.js?v=99e7f3d8.91291a0";
+} from "./renderevents.js?v=1c1c8f16.b47c27c";
 
 /* === VARIABLES === */
 const hash = window.location.hash.substring(1);
