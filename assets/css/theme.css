@@ -98,10 +98,12 @@
     box-shadow: none !important;
 }
 
-/* Slightly taller header with a centered logo + title brand */
+/* Slightly taller header with a centered logo + title brand.
+   The brand is position:absolute, so it adds no height; without this the row
+   collapses on desktop (drawer button hidden) and the logo gets cropped. */
 .md-header__inner {
     position: relative;
-    /* min-height: 3.6rem; */
+    min-height: 2.5rem;
 }
 
 /* Subtitle banner */

@@ -1,6 +1,6 @@
 console.log("executing:", "account_reset_pwd.js");
 
-import {openErrorModal, openSuccessModal} from "../global/modal.js?v=64e49d76.4850acc";
+import {openErrorModal, openSuccessModal} from "../global/modal.js?v=b766213d.6af56a0";
 
 
 /* === VARIABLES === */
