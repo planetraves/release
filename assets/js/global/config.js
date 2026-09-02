@@ -3,7 +3,7 @@ console.log("executing:", "config.js");
 SITE_URL = "https://planetraves.fr"
 
 /* DEPLOY_DEV is patched to true/false at deploy time by deploy.py (env DEV) */
-const DEPLOY_DEV = true;
+const DEPLOY_DEV = false;
 
 APP_CONFIG = {
     DEV: DEPLOY_DEV || ["localhost", "127.0.0.1"].includes(window.location.hostname),

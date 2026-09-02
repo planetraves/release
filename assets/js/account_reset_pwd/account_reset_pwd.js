@@ -1,6 +1,6 @@
 console.log("executing:", "account_reset_pwd.js");
 
-import {openErrorModal, openSuccessModal} from "../global/modal.js?v=1c1c8f16.b47c27c";
+import {openErrorModal, openSuccessModal} from "../global/modal.js?v=d3b9f3cf.8fdb502";
 
 /* === VARIABLES === */
 const resetPwdForm = document.getElementById("reset-pwd-form");
