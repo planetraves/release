@@ -6,7 +6,7 @@ APP_CONFIG = {
     DEV: false,
     SUPABASE_URL: "https://zjdtclevsrcukfkfmgbs.supabase.co",
     SUPABASE_ANON_KEY: "sb_publishable_71KC1PdJbLSJNIUo08atBg_Fuc1ZYXV",
-    EMAIL_ADDRESS: "no-reply@planetraves.fr",
+    EMAIL_ADDRESS: "noreply@planetraves.fr",
     EMAILCONFIRMED_REDIRECT_URL: SITE_URL + "/account_confirmed/",
     RESETPWD_REDIRECT_URL: SITE_URL + "/account_reset_pwd/",
     ROLES: {
