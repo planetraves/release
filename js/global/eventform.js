@@ -1,7 +1,7 @@
 console.log("executing:", "eventform.js");
 
-import { openErrorModal } from "./modal.js?v=d7a08300.956c656";
-import { tagInput, userTags, clearTags, addTag } from "./tags.js?v=d7a08300.956c656";
+import { openErrorModal } from "./modal.js?v=6bf380a3.7387142";
+import { tagInput, userTags, clearTags, addTag } from "./tags.js?v=6bf380a3.7387142";
 // import { parsePhoneNumber, AsYouType } from 'libphonenumber-js'
 
 /* === VARIABLES === */
@@ -293,7 +293,13 @@ export function getEventFormPayload() {
         
     const tags = userTags.map((t) => t.trim().toLowerCase())
         .filter(Boolean);
-    
+
+    /* require at least one tag (ignoring the internal "is_test" marker) */
+    if (tags.filter((t) => t !== "is_test").length === 0) {
+        openErrorModal("Ajoutez au moins un tag");
+        return;
+    }
+
     const payload = {
         title: form.querySelector('#title').value,
         long_description: long_description === "" ? null : long_description,
