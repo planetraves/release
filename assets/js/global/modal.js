@@ -41,6 +41,7 @@ let currentModal = null;
 let sessionProfile = null;
 let eventModalType = null;
 let reasonRequired = false;
+let errorModalOnClose = null;
 
 // Predefined moderation motives shown as checkboxes in the confirm modal.
 const MODERATION_REASONS = {
@@ -69,6 +70,9 @@ function closeSuccessModal() {
 function closeErrorModal() {
     errorModal.classList.add("hidden");
     document.body.style.overflow = "";
+    const onClose = errorModalOnClose;
+    errorModalOnClose = null;
+    if (onClose) onClose();
 }
 
 function closeCurrentModal() {
@@ -134,7 +138,8 @@ async function sendEmail({ to, subject, body, replyTo = null }) {
         console.warn("sendEmail skipped: no recipient");
         return null;
     }
-    console.log("sending email:", { to, subject, replyTo });
+    fileLog("sending email:", { to, subject, replyTo, body });
+    console.log("sending email:", { to, subject, replyTo, body });
     const { error } = await window.supabaseClient.functions.invoke("send-email", {
         body: { to, subject, body, from: `${APP_CONFIG.EMAIL_NAME} <${APP_CONFIG.EMAIL_ADDRESS}>`, replyTo },
     });
@@ -166,6 +171,7 @@ ${formatReason(reason)}Si vous n'êtes pas d'accord avec cette décision, vous p
 L'équipe Planet Raves`;
 
     // Surface a failed notification to the caller so it shows the error modal.
+    fileLog("deleting event:", { event: event });
     return await sendEmail({ to: event.creator_email ?? null, subject, body, replyTo: sessionProfile?.email ?? null });
 }
 
@@ -258,7 +264,8 @@ export function openSuccessModal(text) {
     document.body.style.overflow = "hidden";
 }
 
-export function openErrorModal(text, message=null) {
+export function openErrorModal(text, message=null, onClose=null) {
+    errorModalOnClose = onClose;
     errorModal.querySelector("#text").innerText = text;
     if (message !== null) {
         errorModal.querySelector("#message").innerText = message;
@@ -600,9 +607,9 @@ export async function confirm(action) {
     closeConfirmModal();
     closeCurrentModal();
     
-    // setTimeout(function () {
-    //     window.location.reload();
-    // }, 3000);
+    setTimeout(function () {
+        window.location.reload();
+    }, 3000);
 }
 
 export function closeModal(target) {

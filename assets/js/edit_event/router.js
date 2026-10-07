@@ -2,19 +2,19 @@ import {
     closeModal, openConfirmModal, confirm,
     setConfirmBtnState, openAgeHelpModal, openTagHelpModal, openEndDateHelpModal, openCategoryHelpModal,
     openContributorCharterModal
-} from "../global/modal.js?v=388b8cc9.cfefda3";
+} from "../global/modal.js?v=c785eaec.5467976";
 
 import { 
-    priceChanged, handleImageChoice, removeImage, formatPhoneInput, toggleCategory
-} from "../global/eventform.js?v=388b8cc9.cfefda3"
+    priceChanged, handleImageChoice, removeImage, formatPhoneInput, toggleCategory, onFieldEdited
+} from "../global/eventform.js?v=c785eaec.5467976"
 
 import { 
     addTag, removeLastTag
-} from "../global/tags.js?v=388b8cc9.cfefda3"
+} from "../global/tags.js?v=c785eaec.5467976"
 
 import { 
     searchAddress, selectAddress, hideAddressSuggestions
-} from "../global/address.js?v=388b8cc9.cfefda3"
+} from "../global/address.js?v=c785eaec.5467976"
 
 import { 
     editEvent, goBack
@@ -149,6 +149,7 @@ document.addEventListener("keydown", async (event) => {
 });
 
 document.addEventListener("input", (event) => {
+    onFieldEdited(event.target); // clear inline validation error of the edited field
     const el = event.target.closest("[data-input-type]");
     if (!el) return;
     event.preventDefault(); // prevent page scroll on Space
@@ -157,6 +158,7 @@ document.addEventListener("input", (event) => {
 
 
 document.addEventListener("change", (event) => {
+    onFieldEdited(event.target); // clear inline validation error of the edited field
     const el = event.target.closest("[data-change-type]");
     if (!el) return;
     event.preventDefault(); // prevent page scroll on Space
