@@ -1,20 +1,20 @@
 import { 
     closeModal, openConfirmModal, confirm,
     setConfirmBtnState, openAgeHelpModal, openTagHelpModal, openEndDateHelpModal, openCategoryHelpModal,
-    openContributorCharterModal
-} from "../global/modal.js?v=fa2473ce.2e65307";
+    openPublicationCharterModal
+} from "../global/modal.js?v=5e031297.b3ecfe0";
 
 import { 
     priceChanged, handleImageChoice, removeImage, formatPhoneInput, toggleCategory, onFieldEdited
-} from "../global/eventform.js?v=fa2473ce.2e65307"
+} from "../global/eventform.js?v=5e031297.b3ecfe0"
 
 import { 
     addTag, removeLastTag
-} from "../global/tags.js?v=fa2473ce.2e65307"
+} from "../global/tags.js?v=5e031297.b3ecfe0"
 
 import { 
     searchAddress, selectAddress, hideAddressSuggestions
-} from "../global/address.js?v=fa2473ce.2e65307"
+} from "../global/address.js?v=5e031297.b3ecfe0"
 
 import { 
     editEvent, goBack
@@ -78,8 +78,12 @@ async function handleClick(el, e) {
             openCategoryHelpModal();
             break;
 
-        case "open-contributor-charter":
-            openContributorCharterModal();
+        case "open-publication-charter":
+            openPublicationCharterModal();
+            break;
+
+        case "open-request-pro":
+            window.location.href = `../request_pro`;
             break;
 
         default:
