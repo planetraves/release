@@ -1,6 +1,6 @@
 console.log("executing:", "account.js");
 
-import {openProfileModal, openEventModal, openErrorModal, openSuccessModal} from "../global/modal.js?v=4f728e24.795b6ab";
+import {openProfileModal, openEventModal, openErrorModal, openSuccessModal} from "../global/modal.js?v=c5cb195a.9b199c6";
 
 /* === VARIABLES === */
 const hash = window.location.hash.substring(1);
