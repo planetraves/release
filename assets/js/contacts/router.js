@@ -1,15 +1,21 @@
 import { 
     closeModal, openConfirmModal, confirm,
     setConfirmBtnState
-} from "../global/modal.js?v=e414a98d.387a62c";
+} from "../global/modal.js?v=f8137304.aba9897";
 
 import { 
+    selectTeamTile, closeTeamTiles, teamTileFocusout
+} from "./contacts.js?v=f8137304.aba9897";
 
-} from "./contacts.js?v=e414a98d.387a62c";
+const teamList = document.getElementById("team-list");
 
 /* === LOCAL FUNCTIONS === */
 async function handleClick(el, e) {
     switch (el.dataset.action) {
+        case "select-team-tile":
+            selectTeamTile(el);
+            break;
+
         default:
             console.warn("unknown 'click' action:", el.dataset.action)
     }
@@ -26,12 +32,17 @@ async function handleChange(el) {
 document.addEventListener("click", async (event) => {
     if (!event.target.closest("[data-allow-action]") && event.target.closest("[data-no-action]")) return;
     const el = event.target.closest("[data-action]");
-    if (!el) return;
+    if (!el) {
+        // click outside any tile closes the open one
+        closeTeamTiles();
+        return;
+    }
     event.preventDefault(); // prevent page scroll on Space
     await handleClick(el, event);
 });
 
 document.addEventListener("keydown", async (event) => {
+    if (event.key !== "Enter" && event.key !== " ") return;
     if (!event.target.closest("[data-allow-action]") && event.target.closest("[data-no-action]")) return;
     const el = event.target.closest("[data-action]");
     if (!el) return;
@@ -52,3 +63,5 @@ document.addEventListener("change", (event) => {
 document.addEventListener("submit", (event) => {
   event.preventDefault();
 });
+
+teamList?.addEventListener("focusout", teamTileFocusout);
