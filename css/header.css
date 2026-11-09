@@ -25,11 +25,6 @@
     color: var(--primary-title);
 }
 
-.md-header__button.md-icon.drawer svg {
-    width: 1.6rem;
-    height: 1.6rem;
-}
-
 /* Big logo row above the title; collapses when the header gets .md-header--logo-hidden */
 .md-header__logo-top {
     --logo-top-height: 120px;
@@ -42,7 +37,9 @@
     transition: max-height 0.25s ease, padding 0.25s ease, opacity 0.2s ease;
 }
 
-.md-header--logo-hidden .md-header__logo-top {
+.md-header--logo-hidden .md-header__logo-top,
+body.calendar-view .md-header__logo-top,
+body.filters-open .md-header__logo-top {
     max-height: 0;
     padding-top: 0;
     opacity: 0;
@@ -91,7 +88,8 @@ body {
 /* Title text */
 .site-title {
     font-family: "Barlow Semi Condensed", cursive;
-    font-size: 2rem;
+    font-size: 1.2rem;
+    letter-spacing: 0.2em;
     font-weight: 800; /* Monoton only ships weight 400 */
     text-transform: uppercase;
     color: var(--primary-title);
