@@ -2,23 +2,23 @@ import {
     closeModal, openConfirmModal, confirm,
     setConfirmBtnState, openAgeHelpModal, openTagHelpModal, openEndDateHelpModal, openCategoryHelpModal, 
     openPublicationCharterModal
-} from "../global/modal.js?v=b2d53c65.ce878d1";
+} from "../global/modal.js?v=37e6df63.09d2c1d";
 
 import { 
     priceChanged, handleImageChoice, formatPhoneInput, toggleCategory, updateEndDateBounds, validateEndDate, onFieldEdited
-} from "../global/eventform.js?v=b2d53c65.ce878d1"
+} from "../global/eventform.js?v=37e6df63.09d2c1d"
 
 import { 
     addTag, removeLastTag
-} from "../global/tags.js?v=b2d53c65.ce878d1"
+} from "../global/tags.js?v=37e6df63.09d2c1d"
 
 import { 
     searchAddress, selectAddress, hideAddressSuggestions
-} from "../global/address.js?v=b2d53c65.ce878d1"
+} from "../global/address.js?v=37e6df63.09d2c1d"
 
 import { 
     submitEvent
-} from "./submit.js?v=b2d53c65.ce878d1"
+} from "./submit.js?v=37e6df63.09d2c1d"
 
 
 /* === LOCAL FUNCTIONS === */
@@ -123,6 +123,9 @@ async function handleChange(el) {
             console.warn("unknown 'change' action:", el.dataset.changeType)
     }
 }
+
+/* === INITIAL LOAD === */
+window.refreshPendingNotifications();
 
 /* === LISTENERS === */
 document.addEventListener("click", async (event) => {
