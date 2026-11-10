@@ -2,23 +2,23 @@ import {
     closeModal, openConfirmModal, confirm,
     setConfirmBtnState, openAgeHelpModal, openTagHelpModal, openEndDateHelpModal, openCategoryHelpModal,
     openPublicationCharterModal
-} from "../global/modal.js?v=cf0eab2c.de399c9";
+} from "../global/modal.js?v=a727f019.3b2c8e5";
 
 import { 
     priceChanged, handleImageChoice, removeImage, formatPhoneInput, toggleCategory, onFieldEdited
-} from "../global/eventform.js?v=cf0eab2c.de399c9"
+} from "../global/eventform.js?v=a727f019.3b2c8e5"
 
 import { 
     addTag, removeLastTag
-} from "../global/tags.js?v=cf0eab2c.de399c9"
+} from "../global/tags.js?v=a727f019.3b2c8e5"
 
 import { 
     searchAddress, selectAddress, hideAddressSuggestions
-} from "../global/address.js?v=cf0eab2c.de399c9"
+} from "../global/address.js?v=a727f019.3b2c8e5"
 
 import { 
-    editEvent, goBack
-} from "./edit_event.js?v=cf0eab2c.de399c9"
+    editEvent, goBack, searchCreator
+} from "./edit_event.js?v=a727f019.3b2c8e5"
 
 /* === LOCAL FUNCTIONS === */
 async function handleClick(el, e) {
@@ -99,6 +99,10 @@ async function handleInput(el) {
 
         case "address-search":
             searchAddress(el);
+            break;
+
+        case "creator-search":
+            searchCreator(el);
             break;
 
         default:
