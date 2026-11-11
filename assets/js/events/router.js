@@ -1,7 +1,7 @@
 import { 
     closeModal, openConfirmModal, confirm,
     setConfirmBtnState, openAgeHelpModal, openAreaHelpModal, openViewHelpModal
-} from "../global/modal.js?v=e6f8d666.de4fa2a";
+} from "../global/modal.js?v=d5b7a400.4acfa35";
 
 import { 
     openEvent, searchInput, 
@@ -9,7 +9,7 @@ import {
     switchView, navPrevMonth, navNextMonth, navToday, calendarSelectDay,
     handleSwipe, shareEvent, emailEvent, toggleFilterSwitch, updateAgeFilter, markOverflowingTags,
     fitCalendar, calendarTouchStart, calendarTouchEnd, calendarTouchMove
-} from "./events.js?v=e6f8d666.de4fa2a"
+} from "./events.js?v=d5b7a400.4acfa35"
 
 const container = document.getElementById("events");
 const calendarEl = document.getElementById("calendar");
