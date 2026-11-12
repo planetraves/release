@@ -1,12 +1,14 @@
 console.log("executing:", "account_reset_pwd.js");
 
-import {openErrorModal, openSuccessModal} from "../global/modal.js?v=d5b7a400.4acfa35";
+import {openErrorModal, openSuccessModal} from "../global/modal.js?v=4832b1f8.7aed374";
 
 /* === VARIABLES === */
 const resetPwdForm = document.getElementById("reset-pwd-form");
 
 /* === LOCAL FUNCTIONS === */
 export async function resetPassword() {
+    if (!resetPwdForm.reportValidity()) return;
+
     const passwordValue = resetPwdForm.querySelector("#password").value;
     const passwordConfirm = resetPwdForm.querySelector("#passwordConfirm");
     const passwordConfirmValue = passwordConfirm.value;
