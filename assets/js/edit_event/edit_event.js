@@ -1,7 +1,7 @@
 console.log("executing:", "edit_event.js");
 
-import { openErrorModal, openSuccessModal } from "../global/modal.js?v=ac2f11d3.f63be43";
-import { initEventForm, getEventFormPayload, uploadImageFile, loadProfiles, setCreatorFields } from "../global/eventform.js?v=ac2f11d3.f63be43";
+import { openErrorModal, openSuccessModal } from "../global/modal.js?v=82873320.13889f5";
+import { initEventForm, getEventFormPayload, uploadImageFile, loadProfiles, setCreatorFields } from "../global/eventform.js?v=82873320.13889f5";
 
 /* === VARIABLES === */
 const hash = window.location.hash.substring(1);
