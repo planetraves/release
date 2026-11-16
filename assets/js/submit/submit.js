@@ -1,7 +1,7 @@
 console.log("executing:", "submit.js");
 
-import { openErrorModal, openSuccessModal, openPublicationCharterModal } from "../global/modal.js?v=3a96c66c.e437454";
-import { initEventForm, getEventFormPayload, uploadImageFile, loadProfiles, setCreatorFields } from "../global/eventform.js?v=3a96c66c.e437454";
+import { openErrorModal, openSuccessModal, openPublicationCharterModal } from "../global/modal.js?v=ac2f11d3.f63be43";
+import { initEventForm, getEventFormPayload, uploadImageFile, loadProfiles, setCreatorFields } from "../global/eventform.js?v=ac2f11d3.f63be43";
 
 /* === VARIABLES === */
 const loading = document.getElementById("loading-screen");
