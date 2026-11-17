@@ -2,14 +2,14 @@ import {
     closeModal, openConfirmModal, confirm,
     setConfirmBtnState, openModeratorCharterModal,
     copyShareLink, shareEventNatively
-} from "../global/modal.js?v=47c764da.5c627e4";
+} from "../global/modal.js?v=ba9117d7.fd0f8b8";
 
 import {
     showSignup, showLogin, showResetPassword, signup, login, logout,
     sendResetPasswordRequest, updateProfile, openPendingEvent, openMyEvent, openProfile,
     searchInput, shareEvent, emailEvent, sharePendingEvent, shareProfile, handleAccordion,
     goToPendingRequests
-} from "./account.js?v=47c764da.5c627e4";
+} from "./account.js?v=ba9117d7.fd0f8b8";
 
 async function handleClick(el) {
     switch (el.dataset.action) {
