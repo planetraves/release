@@ -1,8 +1,8 @@
 import {
     resetPassword
-} from "./account_reset_pwd.js?v=69dd3969.2b511a2e";
+} from "./account_reset_pwd.js?v=1fd4e8fd.23fc4063";
 
-import {closeModal} from "../global/modal.js?v=69dd3969.2b511a2e";
+import {closeModal} from "../global/modal.js?v=1fd4e8fd.23fc4063";
 
 async function handleClick(el) {
     switch (el.dataset.action) {
