@@ -1,11 +1,11 @@
 console.log("executing:", "events.js");
 
 import { openEventModal, openShareModal
-} from "../global/modal.js?v=bdf25e58.f68b9821";
+} from "../global/modal.js?v=3f4abee3.3642f703";
 
 import { renderOptionBtn, renderSection,
          renderDots, renderEventSuggestion
-} from "./renderevents.js?v=bdf25e58.f68b9821";
+} from "./renderevents.js?v=3f4abee3.3642f703";
 
 /* === VARIABLES === */
 const hash = window.location.hash.substring(1);
@@ -43,6 +43,8 @@ let touchEndX = 0;
 let user_profile = null;
 let EVENTS = [];
 let calendarDayEvents = {};
+let selectedDay = null; // "YYYY-MM-DD" when the tiles view shows a single calendar day
+
 let activeFilters = {
     category: new Set(Object.keys(APP_CONFIG.CATEGORIES)),
     area: new Set(Object.keys(APP_CONFIG.AREAS)),
@@ -99,7 +101,8 @@ function groupEvents(events) {
     };
 
     events.forEach(event => {
-        const eventDate = event.event_date.slice(0, 10); // "YYYY-MM-DD"
+        // a multi-day event has a single tile, on its next scheduled day
+        const eventDate = eventNextDay(event);
         if (eventDate < todayStr) return;
 
         if (eventDate === todayStr) {
@@ -118,7 +121,7 @@ function groupByMonth(events) {
     const map = {};
 
     events.forEach(event => {
-        const monthKey = event.event_date.slice(0, 7); // "YYYY-MM"
+        const monthKey = eventNextDay(event).slice(0, 7); // "YYYY-MM"
 
         if (!map[monthKey]) map[monthKey] = [];
         map[monthKey].push(event);
@@ -136,13 +139,13 @@ function groupByDateEvents(events) {
     const map = {};
 
     events.forEach(event => {
-        const date = event.event_date;
-
-        if (!map[date]) {
-            map[date] = []; // one entry per event
-        }
-
-        map[date].push(eventCategoryIds(event));
+        // one dot per event on each of its days
+        eventDays(event).forEach(date => {
+            if (!map[date]) {
+                map[date] = []; // one entry per event
+            }
+            map[date].push(eventCategoryIds(event));
+        });
     });
 
     return map;
@@ -174,7 +177,45 @@ function showHeader() {
     toolbar.classList.remove("hidden");
 }
 
+function renderDayTiles(dateStr) {
+    // every event scheduled that day, multi-day ones included, ordered by their first time that day
+    const timeKey = event => eventEntriesOn(event, dateStr).find(e => e.time)?.time ?? "99:99";
+    const dayEvents = EVENTS
+        .filter(event => eventDays(event).includes(dateStr))
+        .sort((a, b) => timeKey(a).localeCompare(timeKey(b)));
+
+    const [y, m, d] = dateStr.split("-").map(Number);
+    const title = new Date(y, m - 1, d).toLocaleDateString("fr-FR", {
+        weekday: "long",
+        day: "numeric",
+        month: "long",
+        year: "numeric"
+    });
+    const backBtn = `
+        <button class="day-back-btn" data-action="calendar-clear-day" title="Retour à la vue normale">
+            <span class="text">Tout afficher</span>
+            <span class="material-symbols-outlined ico">close</span>
+        </button>`;
+
+    return renderSection("day", title, "", dayEvents, backBtn);
+}
+
 function renderTiles() {
+    if (selectedDay) {
+        tilesView.innerHTML = renderDayTiles(selectedDay);
+        tilesView.hidden = false;
+        agendaView.hidden = true;
+        document.body.classList.remove("calendar-view");
+        switchViewArea.querySelector('[data-view="tiles"]').classList.add("active");
+        switchViewArea.querySelector('[data-view="agenda"]').classList.remove("active");
+        // the "Quand" filter doesn't apply to a single day
+        document.querySelectorAll(`[data-filter-type="when"]`).forEach(btn => btn.disabled = true);
+        loading.style.display = "none";
+        eventsMain.scrollTop = 0;
+        requestAnimationFrame(markOverflowingTags);
+        return;
+    }
+
     const grouped = groupEvents(EVENTS);
 
     grouped.today = sortByDate(grouped.today);
@@ -204,6 +245,9 @@ function renderTiles() {
     requestAnimationFrame(markOverflowingTags);
 
     if (eventId) {
+        // links to a day of an old per-day event point to an id now kept in old_ids
+        const target = EVENTS.find(e => e.id === eventId || e.old_ids?.includes(eventId));
+        eventId = target?.id ?? eventId;
         console.log("show event id:", eventId);
         const el = tilesView.querySelector(`[data-event-id="${eventId}"]`);
         if (!el) return;
@@ -239,8 +283,10 @@ function applyFilter() {
             tile.classList.toggle("hidden", !matchesFilters(tile.dataset.category, tile.dataset.price, tile.dataset.area, tile.dataset.minAge, tile.dataset.maxAge));
         });
 
-        /* apply when filter only on tiles */
-        if (activeFilters.when.size > 0) {
+        /* apply when filter only on tiles (not on a single selected day) */
+        if (selectedDay) {
+            // keep the day section (and its back button) even when filters hide all its tiles
+        } else if (activeFilters.when.size > 0) {
             document.querySelectorAll(".section-tab.no-empty")
                 .forEach(section => {
                     section.hidden = true;
@@ -272,14 +318,14 @@ function applyFilter() {
         } else if (hideAll) {
             filteredEvents = [];
         } else {
-            filteredEvents = EVENTS.filter(event => matchesFilters(eventCategoryIds(event).join(","), String(event.price), eventAreaId(event), event.min_age, event.max_age));
+            filteredEvents = EVENTS.filter(event => matchesFilters(eventCategoryIds(event).join(","), String(event.price), eventAreaIds(event).join(","), event.min_age, event.max_age));
         }
         renderCalendar(filteredEvents);
     }
 }
 
 function updateEmptyState() {
-    document.querySelectorAll(".section-tab.no-empty.selected").forEach( section => {
+    document.querySelectorAll(".section-tab.no-empty.selected:not(.section-day)").forEach( section => {
         const sectionHasVisibleTile = [...section.querySelectorAll(".event-tile")]
             .some(tile => !tile.classList.contains("hidden"))
         section.hidden = !sectionHasVisibleTile;
@@ -457,12 +503,9 @@ async function loadEvents() {
         query = query.not("is_test", "is", true);
     }
 
+    // sorted by next day and time in the browser (an event in progress started before today)
     const { data, error } = await query
-        .order("event_date", { ascending: true })
-        .order("event_start_time", {
-            ascending: true,
-            nullsFirst: false
-        });
+        .order("event_date", { ascending: true });
 
     if (error) {
         console.log("Error:", error);
@@ -486,9 +529,11 @@ function matchesFilters(category, price, area, minAge, maxAge) {
         !cats.some(c => activeFilters.category.has(c))
     ) return false;
 
+    // an event with several places matches if one of its areas is selected
+    const areas = String(area).split(",").filter(Boolean);
     if (
         activeFilters.area.size > 0 &&
-        !activeFilters.area.has(area)
+        !areas.some(a => activeFilters.area.has(a))
     ) return false;
 
     if (activeFilters.free && price !== "0" && price !== "1") return false;
@@ -540,6 +585,7 @@ export function markOverflowingTags() {
 }
 
 export function switchView(view) {
+    selectedDay = null;
     if (view === "tiles") {
         tilesView.hidden = false;
         document.querySelectorAll(`[data-filter-type="when"]`).forEach(btn => btn.disabled = false);
@@ -573,8 +619,8 @@ export async function emailEvent(eventId) {
 Concernant cet évènement :
  - Titre: ${event.title}
  - Type: ${categoryLabel(eventCategoryIds(event))}
- - Lieu: ${event.location_name}
- - Date: ${formatDateForUI(event.event_date)}
+ - Lieu: ${eventPlacesText(event)}
+ - Date: ${eventDatesText(event)}
  - Lien: ${event_url}
 `;
 
@@ -602,9 +648,9 @@ export function searchInput(input) {
             const found =  (
                 !event.pending &&
                 (event.title.toLowerCase().includes(v) ||
-                event.location_name.toLowerCase().includes(v) ||
                 event.tags.some(tag => tag.toLowerCase().includes(v)) ||
-                event.location_address_town.toLowerCase().includes(v))
+                eventLocations(event).some(l =>
+                    l.name.toLowerCase().includes(v) || l.town.toLowerCase().includes(v)))
             )
             
             if (found) {
@@ -804,19 +850,14 @@ export function navToday() {
 }
 
 export function calendarSelectDay(dateStr) {
-    switchView("tiles");
+    selectedDay = dateStr;
+    renderTiles();
+    applyFilter();
+}
 
-    // Wait for DOM update (important)
-    requestAnimationFrame(() => {
-        // scrool to first event with date
-        const selector = `.event-tile[data-date="${dateStr}"]:not(.hidden)`;
-        const firstTile = document.querySelector(selector);
-        if (!firstTile) return;
-        firstTile.scrollIntoView({
-            behavior: "smooth",
-            block: "center"
-        });
-    });
+export function calendarClearDay() {
+    switchView("tiles");
+    eventsMain.scrollTop = 0;
 }
 
 export function handleSwipe() {

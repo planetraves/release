@@ -2,15 +2,15 @@ import {
     closeModal, openConfirmModal, confirm,
     setConfirmBtnState, openAgeHelpModal, openAreaHelpModal, openViewHelpModal,
     copyShareLink, shareEventNatively
-} from "../global/modal.js?v=bdf25e58.f68b9821";
+} from "../global/modal.js?v=3f4abee3.3642f703";
 
 import { 
     openEvent, searchInput, 
     selectFilterOption, toggleAdditionalFilter, resetFilter,
-    switchView, navPrevMonth, navNextMonth, navToday, calendarSelectDay,
+    switchView, navPrevMonth, navNextMonth, navToday, calendarSelectDay, calendarClearDay,
     handleSwipe, shareEvent, emailEvent, toggleFilterSwitch, updateAgeFilter, markOverflowingTags,
     fitCalendar, calendarTouchStart, calendarTouchEnd, calendarTouchMove
-} from "./events.js?v=bdf25e58.f68b9821"
+} from "./events.js?v=3f4abee3.3642f703"
 
 const container = document.getElementById("events");
 const calendarEl = document.getElementById("calendar");
@@ -31,7 +31,7 @@ async function handleClick(el, e) {
             break;
 
         case "new-event":
-            window.location.href = "../submit";
+            window.location.href = "submit/";
             break;
 
         case "switch-view":
@@ -66,6 +66,10 @@ async function handleClick(el, e) {
             calendarSelectDay(el.dataset.date);
             break;
 
+        case "calendar-clear-day":
+            calendarClearDay();
+            break;
+
         case "show-event":
             openEvent(el.dataset.eventId);
             break;
@@ -83,7 +87,8 @@ async function handleClick(el, e) {
             break;
 
         case "edit-event":
-            window.location.href = `../edit_event#id=${el.dataset.id}`;
+            // the events page is the site root: stay relative to it (the dev site lives under /debug/)
+            window.location.href = `edit_event/#id=${el.dataset.id}`;
             break;
 
         case "email-event":

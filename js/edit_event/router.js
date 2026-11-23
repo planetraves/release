@@ -2,23 +2,25 @@ import {
     closeModal, openConfirmModal, confirm,
     setConfirmBtnState, openAgeHelpModal, openTagHelpModal, openEndDateHelpModal, openCategoryHelpModal,
     openPublicationCharterModal
-} from "../global/modal.js?v=bdf25e58.f68b9821";
+} from "../global/modal.js?v=3f4abee3.3642f703";
 
 import { 
-    priceChanged, handleImageChoice, removeImage, formatPhoneInput, toggleCategory, onFieldEdited, searchCreator
-} from "../global/eventform.js?v=bdf25e58.f68b9821"
+    priceChanged, handleImageChoice, removeImage, formatPhoneInput, toggleCategory, onFieldEdited, searchCreator,
+    updateEndDateBounds, validateEndDate, onAddPlace, removePlace, onPlaceNameEdited, refreshProgramme,
+    toggleProgrammeDay, addProgrammeEntry, removeProgrammeEntry, toggleProgramme, clearEndDate
+} from "../global/eventform.js?v=3f4abee3.3642f703"
 
 import { 
     addTag, removeLastTag
-} from "../global/tags.js?v=bdf25e58.f68b9821"
+} from "../global/tags.js?v=3f4abee3.3642f703"
 
 import { 
     searchAddress, selectAddress, hideAddressSuggestions
-} from "../global/address.js?v=bdf25e58.f68b9821"
+} from "../global/address.js?v=3f4abee3.3642f703"
 
 import { 
     editEvent, goBack
-} from "./edit_event.js?v=bdf25e58.f68b9821"
+} from "./edit_event.js?v=3f4abee3.3642f703"
 
 /* === LOCAL FUNCTIONS === */
 async function handleClick(el, e) {
@@ -52,6 +54,34 @@ async function handleClick(el, e) {
 
         case "select-address":
             selectAddress(el);
+            break;
+
+        case "add-place":
+            onAddPlace();
+            break;
+
+        case "remove-place":
+            removePlace(el);
+            break;
+
+        case "toggle-programme-day":
+            toggleProgrammeDay(el);
+            break;
+
+        case "add-programme-entry":
+            addProgrammeEntry(el);
+            break;
+
+        case "remove-programme-entry":
+            removeProgrammeEntry(el);
+            break;
+
+        case "toggle-programme":
+            toggleProgramme();
+            break;
+
+        case "clear-end-date":
+            clearEndDate();
             break;
 
         case "submit-event":
@@ -101,6 +131,10 @@ async function handleInput(el) {
             searchAddress(el);
             break;
 
+        case "place-name":
+            onPlaceNameEdited();
+            break;
+
         case "creator-search":
             searchCreator(el);
             break;
@@ -121,6 +155,17 @@ async function handleChange(el) {
             const file = el.files[0];
             if (!file) return;
             await handleImageChoice(file);
+            break;
+
+        case "event-date":
+            updateEndDateBounds();
+            refreshProgramme();
+            break;
+
+        case "end-date":
+            validateEndDate();
+            el.reportValidity();
+            refreshProgramme();
             break;
 
         default:
@@ -154,6 +199,8 @@ document.addEventListener("keydown", async (event) => {
         return;
     } else 
         if (el.dataset.action != "tag-input") {
+        // only Enter/Space activate an action: other keys (e.g. Tab) keep their default behavior
+        if (event.key !== "Enter" && event.key !== " ") return;
         event.preventDefault();
     }
     await handleClick(el, event);

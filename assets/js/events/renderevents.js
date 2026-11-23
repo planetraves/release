@@ -13,7 +13,7 @@ export function renderOptionBtn(type, key, config, withicon=true) {
             </button>`
 }
 
-export function renderSection(sectionKey, sectionTitle, subtitle, events) {
+export function renderSection(sectionKey, sectionTitle, subtitle, events, headerAction = "") {
     if (events.length === 0) {
         return `
         <div class="section-tab empty selected" data-key="${sectionKey}">
@@ -27,8 +27,9 @@ export function renderSection(sectionKey, sectionTitle, subtitle, events) {
 
     return `
         <div class="section-tab section-${sectionKey} no-empty selected" data-key="${sectionKey}">
-            <div class="section-header">
+            <div class="section-header ${headerAction ? "with-action" : ""}">
                 <span class="section-title">${sectionTitle}</span>
+                ${headerAction}
             </div>
             <div>
                 ${events.map(renderEventTile).join("")}
@@ -47,13 +48,16 @@ export function renderEventTile(event) {
             data-category="${eventData.categoryIds.join(",")}"
             data-pg="${eventData.pg}"
             data-price="${eventData.price}"
-            data-area="${eventData.areaId}"
+            data-area="${eventData.areaIds.join(",")}"
             data-min-age="${eventData.min_age}"
             data-max-age="${eventData.max_age}"
-            data-date="${eventData.event_date}">
+            data-date="${eventData.nextDay}"
+            data-days="${eventDays(event).join(" ")}">
         <div class="event-side" style="background: ${eventData.categoryPie}">
             <div class="event-category">${eventData.categoryLabel}</div>
-            <div class="event-date">${formatEventDate(eventData.event_date)}</div>
+            ${eventData.dateHtml}
+            <!-- <div class="event-date">${formatEventDate(eventData.nextDay)}</div> -->
+            <!-- ${eventData.untilHtml} -->
             ${eventData.timeHtml}
         </div>
 
@@ -62,11 +66,13 @@ export function renderEventTile(event) {
             <div class="event-meta">
                 ${eventData.locationHtml}
             </div>
+            ${eventData.untilPillHtml}
             <div class="event-meta">
                 ${renderMaterialIconText("sell", eventData.priceLabel)}
                 ${renderMaterialIconText("face", eventData.ageLabel)}
             </div>
             ${eventData.tagsHtml}
+            
         </div>
     </div>
     `;
@@ -97,9 +103,9 @@ export function renderEventSuggestion(event) {
         <div class="event-suggestion-meta non-wrap">
             <div style="color: ${eventData.categoryColor};">${eventData.categoryLabel}</div>
             .
-            <div>${formatEventDateTime(eventData.event_date)}</div>
+            <div>${formatEventDateTime(eventData.nextDay)}</div>
             .
-            <div>${eventData.location_name}</div>
+            <div>${eventData.locationText}</div>
         </div>
     `
     return html;

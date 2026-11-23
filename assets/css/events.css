@@ -53,6 +53,42 @@ body.events-page {
     background: transparent;
 }
 
+.section-header.with-action {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+}
+
+.day-back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.1rem;
+    flex-shrink: 0;
+    margin-right:0.3rem;
+    padding: 0.2rem 0.4rem;
+    color: var(--primary-text);
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid var(--primary-subtext);
+    border-radius: 999px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+    cursor: pointer;
+    font-weight: 600;
+    line-height: 1;
+}
+
+.day-back-btn .text {
+    font-size: 0.7rem;
+}
+
+.day-back-btn .ico {
+    font-size: 0.85rem;
+}
+
+.day-back-btn:active {
+    transform: translateY(1px);
+}
+
 .section-tab.empty {
     display: none;
 }
@@ -99,6 +135,46 @@ body.events-page {
     padding: 0.2rem 0.4rem;
 }
 
+.event-side .event-side-until {
+    display: inline-block;
+    align-self: center;
+    margin: 0.1rem 0;
+    padding: 0.05rem 0.2rem 0.05rem 0.2rem;
+    border-radius: 20px;
+    background: #fff;
+    color: var(--event-color);
+    font-size: 0.5rem;
+    font-weight: 500;
+    line-height: 1.3;
+    /* white-space: nowrap; */
+}
+
+/* .event-dates-meta {
+    min-width: 0;
+}
+
+.event-dates-meta .event-until-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
+    font-size: 0.7rem;
+}
+
+.event-until-pill .material-symbols-outlined {
+    flex-shrink: 0;
+} */
+
+.event-dates-list {
+    min-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+
 .event-category {
     font-size: 0.6rem;
     text-align: left;
@@ -112,6 +188,7 @@ body.events-page {
     justify-content: left;
     font-size: 0.75rem;
     flex: 1;
+    line-height: 1.2;
 }
 
 .event-time {
@@ -119,6 +196,77 @@ body.events-page {
     justify-content: left;
     padding: 0;
     margin: 0;
+}
+
+/* multi-day event: last day, under the next day (modal) */
+.event-until {
+    font-size: 0.55rem;
+    line-height: 1.1;
+    padding: 0.1rem 0 0.15rem;
+    opacity: 0.9;
+}
+
+/* multi-day event: last day, as a pill in the tile details */
+.event-until-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.2rem;
+    margin: 0.1rem 0;
+    padding: 0.05rem 0.5rem 0.05rem 0.35rem;
+    border-radius: 999px;
+    background: var(--event-color);
+    color: #fff;
+    font-size: 0.55rem;
+    font-weight: 600;
+    line-height: 1.4;
+    white-space: nowrap;
+}
+
+.event-until-pill .material-symbols-outlined {
+    font-size: 0.75rem;
+}
+
+/* several places: the "+N" badge stays visible when the names are ellipsed */
+.event-places {
+    max-width: 100%;
+}
+
+.event-more-places {
+    flex-shrink: 0;
+    padding: 0 0.35rem;
+    border-radius: 999px;
+    background: var(--primary-dark);
+    color: #fff;
+    font-size: 0.5rem;
+    font-weight: 600;
+    line-height: 1.5;
+}
+
+/* modal: one block per place (name + address) */
+.event-details .event-location {
+    flex-direction: column;
+    gap: 0.15rem;
+}
+
+/* modal: programme of a multi-day / multi-place event (accordion, see modal.css) */
+.event-details .event-programme {
+    flex-direction: column;
+    gap: 0.15rem;
+}
+
+.event-details .event-programme ul {
+    margin: 0.15rem 0 0 1.1rem;
+    padding: 0;
+    list-style: none;
+}
+
+.event-details .event-programme li {
+    margin: 0;
+    padding: 0.05rem 0;
+}
+
+.event-details .event-programme li.past {
+    opacity: 0.5;
 }
 
 .event-tile:hover {
